@@ -60,11 +60,11 @@ roary -e --mafft -o small_dataset_proteins -f roary -cd 100 -p 16 *.gff
 
 ##Run FastTree
 
-You installed FastTree in your appl_taito directory. To run it you must call it from this directory. You need to run FastTree using the core_gene_alignment.aln built buy Roary.
+You installed FastTree in your appl_taito directory. To run it you must call it from this directory. You need to run FastTree using the *core_gene_alignment.aln* built by *Roary*.
 
 Run FastTree.
 *Note: if the directory where FastTree is different be sure to call it correctly. I'm assuming you are still in taito-shell.*
 
-´´´
+Â´Â´Â´
 $HOME/appl_taito/FastTree -nt < core_gene_alignment.aln > core_gene_alignment.nwk
 
