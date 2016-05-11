@@ -64,6 +64,12 @@ exit from the session
 exit
 ```
 
+After ~30 min Check if the job is finished 
+
+```
+less nohup.out
+```
+
 ##Run FastTree
 
 Open a new session in Taito
@@ -77,10 +83,16 @@ You need to run FastTree using the *core_gene_alignment.aln* built by *Roary*.
 *Note: be sure that the path to FastTree is correct. I'm assuming you are still in taito-shell.*
 
 ```
-$HOME/appl_taito/FastTree -nt < core_gene_alignment.aln > core_gene_alignment.nwk
+nohup $HOME/appl_taito/FastTree -nt < core_gene_alignment.aln > core_gene_alignment.nwk &
 ```
 exit from the session
 
 ```
 exit
+```
+
+After ~15 min check if the job is finished 
+
+```
+less nohup.out
 ```
