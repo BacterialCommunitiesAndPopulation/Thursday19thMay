@@ -102,7 +102,7 @@ perl <path/to/scripts>/exclude_recombination.pl <path/to/tabular_BNG_file> <path
 
 The script produced a file named *.screened.fas. 
 
-*Unfortunately the script has a bag and before running FastTree the first line should be removed*
+*Note: unfortunately the script has a bag and before running FastTree the first line should be removed*
 
 Remove the first line of the *.screened.fas.
 
