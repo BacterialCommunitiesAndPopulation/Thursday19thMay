@@ -68,9 +68,9 @@ Open a terminal. Go to the directory containing the hierBAPS executable files an
 
 ##Recombination detection using *Brat Next Gen*
 
-First you should check input sequences are evolutionarily close. Check if the median (+/- SD) of the root-to-tip distance in TemPest is not more than 0.1.
+First you should check if the input sequences are evolutionarily close. Check if the median (+/- SD) of the root-to-tip distance in TemPest is not more than 0.1.
 
-To run BNG please use the follow instructions here:
+To run BNG please use the instructions here:
 http://users.ics.aalto.fi/pemartti/win32_brat/BratNextGen_manual.pdf
 
 *Note: the built-in method for estimating alpha is optimized for bigger samples and, sometimes BNG fails when there are few genomes. In our case we have too few genomes, and we need to fix value of alpha. With "normal" dataset that is not needed if alpha is less than 20. If it is higher than 20, fix it at 20. Marttinen Pekka recommended alpha=20 as a default solution to use as manual input, if the automated learning does not work. The value is based on empirical knowledge gained from experiments with multiple data sets, so not really a theoretical justification. The very large value corresponds to assuming that the allele frequencies are exactly 0.5,0.5 (in case of two possible alleles), which of course we can discard as not reasonable.*
