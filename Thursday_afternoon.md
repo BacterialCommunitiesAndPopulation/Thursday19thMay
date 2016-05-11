@@ -126,7 +126,7 @@ Now you can map the hierBAPS results on the core tree. Download the *core_gene_u
 #Compare the core tree vs genealogy
 
 For comparing two trees we will use a script developed by by Morgan N. Price in Adam Arkin's group at Lawrence Berkeley National Lab.
-You can find the perl script in the directory *scripts*
+You can find the perl script in the directory *scripts*.
 For interpreting the results please check http://meta.microbesonline.org/fasttree/treecmp.html
 
 ```
