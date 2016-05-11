@@ -80,7 +80,7 @@ screen
 
 You need to run FastTree using the *core_gene_alignment.aln* built by *Roary*.
 
-*Note: be sure that the path to FastTree is correct. I'm assuming you are still in taito-shell.*
+*Note: be sure that the path to FastTree is correct.*
 
 ```
 nohup $HOME/appl_taito/FastTree -nt < core_gene_alignment.aln > core_gene_alignment.nwk &
