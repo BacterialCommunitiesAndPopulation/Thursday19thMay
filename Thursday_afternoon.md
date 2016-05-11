@@ -68,7 +68,7 @@ Open a terminal. Go to the directory containing the hierBAPS executable files an
 
 ###Comments on hierBAPS
 
-*Note: the comments below, kindly provided by Prof. Jukka Corander, is a sort of summary of what is well explained in the original paper  http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3670731/*
+*Note: the comment below, kindly provided by Prof. Jukka Corander, is a sort of summary of what is well explained in the original paper  http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3670731/*
 
 The program does a nested clustering of the population, i.e. given each cluster at the 1st level, the algorithm and the model seek statistical evidence for a further substructure within each cluster. If there is no significant signal of substructure within a cluster, it will not be further split in the 2nd level analysis. And so on, if even a 3rd level happens to be considered. The nested approach makes sense because most data sets are hierarchically structured and the deeper the branches between subclades, the less power one has to find fine level population structure in a single global analysis. At the finer (less deep in a tree) levels less strong recombination signals may become dominant again, when the polymorphisms only present in the other clades are pruned away in the hierBAPS model. In addition to finding monophyletic clades, the program can detect paraphyletic clades which are caused by recombination. Hence, by combining hierBAPS with a phylogenetic analysis one can see if there is evidence of recombination acting as a glue to some of the clusters.
 
