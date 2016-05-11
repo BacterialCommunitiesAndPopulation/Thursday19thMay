@@ -62,8 +62,6 @@ roary -e --mafft -o small_dataset_proteins -f roary -cd 100 -p 16 *.gff
 
 You need to run FastTree using the *core_gene_alignment.aln* built by *Roary*.
 
-Run FastTree.
-
 *Note: be sure that the path to FastTree is correct. I'm assuming you are still in taito-shell.*
 
 ```
