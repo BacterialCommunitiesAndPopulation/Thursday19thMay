@@ -31,11 +31,11 @@ sbatch Prokkabatch.sh
 ```
 
 ##Run Roary
-You will run Roary in interactive mode. 
-Open a Taito-shell session:
+
+Open a new session in Taito
 
 ```
-sinteractive
+screen
 ```
 
 Load the modules you need.
@@ -55,10 +55,22 @@ mkdir roary
 Run Roary.
 
 ```
-roary -e --mafft -o small_dataset_proteins -f roary -cd 100 -p 16 *.gff
+nohup time roary -e --mafft -o small_dataset_proteins -f roary -cd 100 -p 16 prokka-gff/*.gff &
+```
+
+exit from the session
+
+```
+exit
 ```
 
 ##Run FastTree
+
+Open a new session in Taito
+
+```
+screen
+```
 
 You need to run FastTree using the *core_gene_alignment.aln* built by *Roary*.
 
@@ -66,4 +78,9 @@ You need to run FastTree using the *core_gene_alignment.aln* built by *Roary*.
 
 ```
 $HOME/appl_taito/FastTree -nt < core_gene_alignment.aln > core_gene_alignment.nwk
+```
+exit from the session
+
+```
+exit
 ```
