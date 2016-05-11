@@ -10,7 +10,7 @@ During this hands-on session we will investigate the effect of recombination on 
 
 Using your sftp client (e.g. WinSCP or Filezillla) copy *core_gene_alignment.aln* and *core_gene_alignment.nwk* to your local computer.
 
-*Note: please visit this site for a list of windows commands http://commandwindows.com/windows7-commands.htm*
+*Note: please visit this site for a list of windows commands http://commandwindows.com/windows7-commands.htm.*
 *Here some important ones: list your directory - dir; change the directory - cd; delete a file - del file; display a *.txt file - type file*
 
 Go to "Start" and in the white box "Search programs and files" type *cmd*.
