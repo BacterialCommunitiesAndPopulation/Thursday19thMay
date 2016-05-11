@@ -6,7 +6,7 @@ This file contains the guidelines for running the tasks to perform in a group.
 
 You might decide to run only one job for group or each member of the group will run a job. However, be aware that you are alone in this activity and if you need help you need to find it within your group.
 This task is propaedeutic to the afternoon activities and aims to give you the chance to test the skills you learnt in the morning.   
-You will annotate *Campylobacter jejuni* genomes using *Prokka* (it would take approximately 45 min) and then extract core and accessory genome list using *Roary* (it would take approximately 30 min). Using he *core genome alignment* extract by *Roary* you will build a tree using *FastTree*. These analyses serve for investigating recombination events using *Brat Next Gen* and inferring population structure using *hierBAPS*.
+You will annotate *Campylobacter jejuni* genomes using *Prokka* (it would take approximately 45 min) and then extract core and accessory genome list using *Roary* (it would take approximately 20 min). Using he *core genome alignment* extract by *Roary* you will build a tree using *FastTree*. These analyses serve for investigating recombination events using *Brat Next Gen* and inferring population structure using *hierBAPS*.
 
 
 ##Modify the batch script and run Prokka
