@@ -91,7 +91,7 @@ http://users.ics.aalto.fi/pemartti/win32_brat/BratNextGen_manual.pdf
 
 ##Mask recombination events and build a genealogy tree
 
-Upload to your csc account the BMG tabular files using sftp.
+Upload to your csc account the *Brat Next Gen* tabular files using sftp.
 
 Mask the recombination events using the perl script *exclude_recombination.pl* available in the directory *scripts*.
 
