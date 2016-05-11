@@ -86,7 +86,7 @@ http://users.ics.aalto.fi/pemartti/win32_brat/BratNextGen_manual.pdf
 8. Click "Results" => "Write tree leaf names" to get the leaf names.
 9. Click "Results" => "Write Segments". This will provide you the recombination fragments file.
 
-*Note: Roary orders the gene alphabetically in the coregenome alignment. For the model implemented in BNG, it's in general better if the core is more contiguously ordered. However it did not harm in this paper http://gbe.oxfordjournals.org/content/5/8/1524.abstract?sid=232d967a-411b-45f9-9747-60dd2f83e4d4
+*Note: Roary orders the gene alphabetically in the coregenome alignment. For the model implemented in BNG, it's in general better if the core is more contiguously ordered. However it did not harm in this paper http://gbe.oxfordjournals.org/content/5/8/1524.abstract?sid=232d967a-411b-45f9-9747-60dd2f83e4d4*
 
 
 ##Mask recombination events and build a genealogy tree
