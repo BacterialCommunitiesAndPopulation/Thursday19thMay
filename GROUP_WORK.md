@@ -70,6 +70,11 @@ Open a new session in Taito
 ```
 screen
 ```
+Load the modules you need.
+
+```
+module load biokit
+```
 
 You need to run FastTree using the *core_gene_alignment.aln* built by *Roary*.
 
