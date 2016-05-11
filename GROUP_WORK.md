@@ -64,7 +64,7 @@ You installed FastTree in your appl_taito directory. To run it you must call it 
 
 Run FastTree.
 
-*Note: if the directory where FastTree is different be sure to call it correctly. I'm assuming you are still in taito-shell.*
+*Note: be sure that the path to FastTree is correct. I'm assuming you are still in taito-shell.*
 
 ```
 $HOME/appl_taito/FastTree -nt < core_gene_alignment.aln > core_gene_alignment.nwk
