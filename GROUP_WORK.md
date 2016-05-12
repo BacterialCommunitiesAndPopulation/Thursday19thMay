@@ -2,7 +2,7 @@
 
 ##Summary
 
-This file contains the guidelines for running the tasks to perform in a group.
+Herein you can find the guidelines for running the tasks to perform in a group.
 
 You might decide to run only one job for group or each member of the group will run a job. However, be aware that you are alone in this activity and if you need help you need to find it within your group.
 This task is propaedeutic to the afternoon activities and aims to give you the chance to test the skills you learnt in the morning.   
