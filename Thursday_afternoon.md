@@ -1,4 +1,4 @@
-#Working with *Campylobacter jejuni* population
+#Working with recombinant population
 
 ##Summary
 
