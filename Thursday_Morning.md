@@ -181,6 +181,10 @@ In directory/wrk/mirossi/shared_all/Thursday/Renibacterium/Pangenome/ you will f
 
 We are going to build a phylogenetic tree from the sequences contained in this file. 
 
+> NOTE - a quicker and easier approach to generating a tree from the core genome using _contigs_ would be to align the filtered contigs and building a tree from this alignment. 
+A collection of tools called the Harvest suite can be used to do this very quickly for a large number of genomes. However, Harvest is not avilable for Windows computers (used by a majority of the group)
+so we will not use this to compare and contrast our results. 
+
 There are multiple types of tree building software available for working with genes or whole genome sequences.
 There is also a range of different tree building methods. These vary from fast and inaccurate (neighbour-joining) to extremely slow and computer intensive methods with a high degree of accuracy (maximum likelihood). 
 
@@ -200,6 +204,7 @@ mkdir Phylogeny && cd Phylogeny
 fasttree -nosupport -noml -nome -nt core_gene_alignment.aln > fastree_nj.tre
 
 ```
+
 
 ```
 Command Breakdown
@@ -238,9 +243,10 @@ perl /wrk/mirossi/shared_all/Thursday19thMay/Renibacterium_Example/fasta2phylip.
 # Run with GTR+Cat 
 phyml -i core_gene_alignment.phylip -s BOTH -o tlr -m GTR -c 4 -b 100 -v 0  --no_memory_check --print_site_lnl --run_id gtr_cat4
 
-phyml -i core_gene_alignment.phylip -s BOTH -m GTR -v 0  --no_memory_check --print_site_lnl --run_id gtr_cat4 ### test
 ```
+
 This should take ~12 minutes to run. 
+
 
 ```
 Command Breakdown
@@ -260,7 +266,7 @@ screen -S ML_tree
 
 fasttree -gtr -gamma -cat 4 -nt < core_gene_alignment.fasta > fastree_ml.tre
 
-# press Ctrl+A+D to detach from the screen and screen -r ML_tree to reattch the screen. 
+# press Ctrl+A+D to detach from the screen and screen -r ML_tree to reattach the screen. 
 # This should take ~55 mins
 ```
 
@@ -275,7 +281,7 @@ Command Breakdown
   -nt 	input nucleotide alignment. 
 ```
 
-*NOTE*: For project or publication purposes you will want to generate a ML tree using the gold standards of tree building such as RAXML or PhyML. 
+_NOTE_: For project or publication purposes you will want to generate a ML tree using the gold standards of tree building such as RAXML or PhyML. 
 
 Lets compare our consensus ML and NJ trees trees using a script developed by by Morgan N. Price in Adam Arkin's group at Lawrence Berkeley National Lab. You can find the perl script in the directory scripts. For interpreting the results please check http://meta.microbesonline.org/fasttree/treecmp.html
 
@@ -285,13 +291,36 @@ perl <path/directory/scripts>/CompareTree.pl -tree treeFile1 -versus treeFile2
 
 Copy and paste the results into libreOffice/Excel. 
 
-The value after frac: is the number of splits that are shared between both trees. The value is quite low. We have stark differences between our trees. We don't have time today to go into why this might be. 
+The value after frac: is the number of splits that are shared between both trees. The value is quite low. We have differences between our ML and NJ trees. 
+
+Lets explore why that might be. Open your phyML and NJ tree in Figtree. Root both at the midpoint. 
+
+Question:
+* Which splits are different between the trees? 
  
+```
+On the PhyML tree expand the Node Labels Tab -> Display -> Labels
+
+This gives the bootstrap support for each of our branches (we bootstrapped our ML tree 100x) 
 
 ```
-Open your ML/NJ tree in Figtree. Root it on the midpoint. 
 
-Now go to File -> Import Annotation -> Open Metadata.tab
+As we can see the split containing ERR327960, ERR327940 and ERR327926 has low bootstrap support value. The split was only well supported at that point in ~44 out of 100 replicate bootstrap trees.
+
+To investigate our phylogenetic inference further we might want to:
+* Delve deeper into the data and look at the SNP data per site (are any of the sites/genes unreliable?)
+* Does our data have significant recombination that could effect the inference (ClonalFrameML/BratNextGen/Gubbins)? 
+* Build a tree using another approach such as a bayesian tree (MrBayes).
+* Prepare the data using another approach such as mapping (BWA->samtools) or assembly alignment (Harvest Suite/Parsnp). Have we lost informative SNPs by removing the intergenic sites? 
+ 
+We don't have time to take the analysis further today, but these are considerations for future projects. 
+
+We are going to use NJ tree, as it is easiest to interprete, and annotate it with our isolate metadata.
+
+```
+Open the NJ tree in Figtree.
+
+Go to File -> Import Annotation -> Open Metadata.tab
 
 Expand on the Tip Label Option Box to the left of the tree -> Display -> Country 
 ```
