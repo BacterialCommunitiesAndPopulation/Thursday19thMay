@@ -4,16 +4,16 @@ The epidemiology of a clonal pathogen
 Co-ordinator:  Dr Sion Bayliss 
 
 ### Dependencies
-Roary
-Prokka
-PhyMl
-FastTree
-BAPS 
-BratNextGen
+- Roary
+- Prokka
+- PhyMl
+- FastTree
+- BAPS 
+- BratNextGen
 
 ### Summary
 
-In the previous session you were introduced to whole genome assembly and associated QC. During the next session you will focus on how the results of WGS assembly can be used to study the epidemiology of your sample.   
+In the previous session you were introduced to whole genome assembly and associated QC. During the next session you will focus on how the results of NGS assembly can be used to study the epidemiology of your sample.   
 
 You will be using an expanded version of the *Renibacterium salmoninarum* dataset you produced during the Wednesday afternoon session. 
 
@@ -29,9 +29,9 @@ You will:
 
 ### **NOTE**: Mapping to a reference genome vs. aligning assemblies 
 
-Today we will be applying a number of analyses to the contigs produced by assembly of raw reads. You should be made aware that there is another equally valid and complementary approach to studying phylogeny.
+Today we will be applying a number of analyses to the contigs produced by assembly of raw reads. You should be made aware that there are other equally valid and complementary approachs to studying phylogeny.
 
-This approach is typically referred to as _mapping_ and involves mapping your raw reads onto a reference genome in order to call variants. This is suitable for resequencing projects, phylogeny of clonal populations and is sometimes used to study closely related species. 
+One approach, typically referred to as _mapping_, involves aligning your raw reads onto a reference genome in order to call variants. This is suitable for resequencing projects, phylogeny of clonal populations and is sometimes used to study closely related species. 
 
 Mapping is usually considered more accurate than assembly and is less time consuming. I will discuss mapping in more depth during the brief lecture. However, today we will be focusing on how to study epidemiology using core gene concatenates. 
 
@@ -163,7 +163,7 @@ Using your sftp client (e.g. WinSCP or Filezilla) copy summary_statistics.txt an
 
 Questions:
 - _Have the core or accessory genes been effected more by the introduction of paralogous genes to our gene clusters?_
-- _Sort the column on No. sequences. Do you notice anything about the top hits?_
+- _Sort the column on No. Sequences. Do you notice anything about the top hits?_
 
 
 ### Core gene alignment 
@@ -186,9 +186,9 @@ Command Breakdown
 ``` 
 
 Navigate to /Thursday19thMay/Renibacterium/Pangenome/pan_genome_sequences/ and search for gene alpha_LP.fa.aln. You will notice the alignment is truncated at the start of the gene in some isolates.
-This truncation could be due to real genetic variance or assembly or annotation error. This alignment will be incorporated into our core gene alignment and _may_ be a source of artefactual variation. We will not take this further today but it is something to consider in future research.    
+This truncation could be due to real genetic variance or assembly and annotation error. This alignment will be incorporated into our core gene alignment and _may_ be a source of artefactual variation. We will not take this further today but it is something to consider in future research.    
 
-We have made a pangenome for our sample and also highlighted some of the concerns and considerations that you should keep in mind when performing this sort of analysis. However, in summary we have a a huge table as our output. This is quite hard to interpret. Next we are going to to generate phylogenetic trees and incorporate these into our analyses.   
+We have made a pangenome for our sample and also highlighted some of the concerns and considerations that you should keep in mind when performing this sort of analysis. However, in summary we have a a huge table as our output. This is quite hard to interpret. Next we are going to generate phylogenetic trees and incorporate these into our analyses.   
 
 
 #### Phylogeny 
@@ -210,7 +210,7 @@ Typically we might use a neighbour joining (NJ) tree to quickly assess the phylo
 
 We are going to use [FastTree](http://meta.microbesonline.org/fasttree/) and for demonstration purposes. It should be installed on your local computer. It can generate an approximate-ML or NJ trees quite quickly.
 
-Firstly, lets generate a neighbour joining tree.
+Firstly, we will generate a neighbour joining tree.
 
 ```sh
 # Make a tree/alignment specific folder
@@ -239,7 +239,7 @@ If we go to `Tree -> Midpoint Root` we can make our tree easier to visualise by 
 
 As we can see in our data there are two major, deep branching clades and further subclusters within these.  
 
-Lets make an ML tree to se if there are any differences in the phylogenetic inference. We will use a program called [PhyML](http://www.atgc-montpellier.fr/phyml/usersguide.php?type=command) on taito.
+We will produce an ML tree to see if there are any differences in the phylogenetic inference. We will use a program called [PhyML](http://www.atgc-montpellier.fr/phyml/usersguide.php?type=command) on taito.
 
 ```sh
 # Taito 
@@ -344,7 +344,7 @@ Expand on the Tip Label Option Box to the left of the tree -> Display -> Country
 
 Questions:
 * Focus on the largest cluster of isolates. What was the historical transmission route of *Renibacterium salmoninarum*?
-* Using the same procedure `Display -> Host` answer the question 'how host specific is *Renibacterium salmoninarum*?'
+* Using the same procedure `Display -> Host` answer the question 'how host-specific is *Renibacterium salmoninarum*?'
 
 
 ### Visualising Pangenomes Alongside Phylogeny. 
