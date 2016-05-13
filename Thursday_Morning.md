@@ -1,20 +1,39 @@
-# Pangenomes and Phylogenies 
+The epidemiology of a clonal pathogen
+=====================================
 
-In the previous session you were introduced to whole genome assembly and associated QC. During the next few sessions you will be learning about how to analyse the contigs produced by your assemblies.   
+Co-ordinator:  Dr Sion Bayliss 
 
-We will be using two datasets during this session:
+### Dependencies
+Roary
+Prokka
+PhyMl
+FastTree
+BAPS 
+BratNextGen
 
-A) An expanded version of the *Renibacterium salmoninarum* dataset you produced during the Wednesday afternoon session. 
+### Summary
 
-B) A *Campylobacter jejuni* dataset for the working exercise session.  
+In the previous session you were introduced to whole genome assembly and associated QC. During the next session you will focus on how the results of WGS assembly can be used to study the epidemiology of your sample.   
 
-### Mapping to a reference genome vs aligning assemblies 
+You will be using an expanded version of the *Renibacterium salmoninarum* dataset you produced during the Wednesday afternoon session. 
+
+You will:
+- Identify the pangenome of your sample
+- Identify notable genes from the pangenome
+- Build a phylogenetic tree from the core genes in your pangenome. 
+- Compare phylogenetic tree building methods.
+- Visualise the pangenome and phylogenetic trees and learn how they might be used to understand the epidemiology of a pathogen.  
+- \[Optional\] - Heirachically cluster isolates.
+- \[Optional\] - Identify recombination regions in your sample.   
+
+
+### **NOTE**: Mapping to a reference genome vs. aligning assemblies 
 
 Today we will be applying a number of analyses to the contigs produced by assembly of raw reads. You should be made aware that there is another equally valid and complementary approach to studying phylogeny.
 
-This approach is typically referred to as _mapping_ and involves mapping your raw fastq reads onto a reference genome in order to call variants. This is suitable for resequencing projects, phylogeny of clonal populations and is sometimes used to study closely related species. 
+This approach is typically referred to as _mapping_ and involves mapping your raw reads onto a reference genome in order to call variants. This is suitable for resequencing projects, phylogeny of clonal populations and is sometimes used to study closely related species. 
 
-Mapping is usually considered more accurate than assembly and is less time consuming. I will discuss mapping in more depth during the brief lecture. While mapping is something you should be aware of we will be focusing on how we would study phylogeny using assemblies. 
+Mapping is usually considered more accurate than assembly and is less time consuming. I will discuss mapping in more depth during the brief lecture. However, today we will be focusing on how to study epidemiology using core gene concatenates. 
 
 ## Pangenomics 
 
@@ -22,17 +41,17 @@ The pangenome is defined as 'describes the full complement of genes in a clade'.
 
 We can sub divide the pangenome into two broad categories, the core and accessory genomes:
 
-* Core Genome - Genes that are present in all isolates within your sample (or a suitable proportion of isolates). 
+* Core Genome - The core genome is often the first step in population genomics studies and the core genome can be defined in different ways. Often it is considered genes that are present in 100% of isolates within your sample. 
+Alternatively, we may include genes that are missing from only individual, exceptional isolates or those that are present in 100% of genomes but are know to be horizontally acquired. Core genes are often important for a number of reasons
+such as understanding the typical metabolic pathways within your organism or for the identification of drug or vaccine targets.  
 
-* Accessory Genome - Genes that are only present in a subset of isolates from your sample. 
+* Accessory Genome - Genes that are present only in a subset of isolates from your sample. Accessory elements can include virulence, resistance or adaptation elements such as phages or plasmids but can also include gene duplications 
+or other horizontally acquired elements such as insertion sequences.    
 
 
-***More info on what a core genome shows us and what might be present in the accessory genome.  
+### Identifying the pangenome
 
-
-#### Identifying the pangenome
-
-We will identify the pangenome of our sample using a tool called [Roary](https://sanger-pathogens.github.io/Roary/) 
+Firstly, we will identify the pangenome of our sample using a tool called [Roary](https://sanger-pathogens.github.io/Roary/) 
 
 In order to run Roary we need to a gff file ( general feature format ) for each of the genomes we are interested in studying.
 
@@ -51,9 +70,10 @@ Column 8: "phase"	For features of type "CDS", the phase indicates where the feat
 Column 9: "attributes"	A list of feature attributes in the format tag=value. 
 ```
 
-These are generated by Prokka and have been provided for you for each subset of isolates in directory /wrk/mirossi/shared_all/Thursday19thMay/Renibacterium_Example/GFFs/. Copy these files to a directory named GFFs in your working directory using `cp`. 
+These are generated by Prokka (which you used yesterday) and have been provided for you for each subset of isolates in directory /Thursday19thMay/Renibacterium_Example/GFFs/ that you will have copied to your working directory.
+Navigate to the GFF folder. 
 
-Now lets run Roary
+Now lets run Roary:
 
 ```sh
 # Taito specific
@@ -85,11 +105,10 @@ When checking in the output folder we will find a number of important files incl
 
 Using your sftp client (e.g. WinSCP or Filezilla) copy summary_statistics.txt and gene_presence_absence.csv to your local computer.
 
-We could have also created a number of useful plots by passing the `-r` argument to Roary. Unfortunately, this option is not available on taito so I have provided the plots for you. 
+We could have also created a number of useful plots by passing the `-r` argument to Roary. Unfortunately, this option is not available on taito 
+so I have provided the plots for you in /Thursday19thMay/Renibacterium_Example/Pangenome/. Using your sftp client (e.g. WinSCP or Filezilla) copy Rplots.pdf to your local computer.
 
-Using your sftp client (e.g. WinSCP or Filezilla) copy /wrk/mirossi/shared_all/Thursday19thMay/Renibacterium_Example/Pangenome/Rplots.pdf to your local computer.
-
-#### Exploring the Pangenome
+### Exploring the Pangenome
 
 Our first place to look is the summary_statistics.txt file.
 
@@ -97,15 +116,15 @@ This will have the format:
 
 ```
 Core genes	(99% <= strains <= 100%)	3266
-Soft core genes	(95% <= strains < 99%)	0
-Shell genes	(15% <= strains < 95%)	147
-Cloud genes	(0% <= strains < 15%)	130
-Total genes	(0% <= strains <= 100%)	3543
+Soft core genes	(95% <= strains < 99%)		0
+Shell genes	(15% <= strains < 95%)		147
+Cloud genes	(0% <= strains < 15%)		130
+Total genes	(0% <= strains <= 100%)		3543
 ```
 
-We can see that the *Renibacterium* isolates have very, very few accessory genes. _Renibacterium salmoninarum_ has a very stable pangenome, it doesn’t often acquire many (if any) genes through horizontal genes transfer.
+We can see that the *Renibacterium* isolates have very few accessory genes. _Renibacterium salmoninarum_ has a stable pangenome and a highly clonal population structure. It doesn’t often acquire many (if any) genes through horizontal genes transfer.
 
-If we open Rplots.pdf we can look at a number of informative plots. Most of the tabs have been bootstrapped, that is to say the samples have been introduced in a random order to see if the impacts on the identification of the pangenome. Some important plots include:
+If we open Rplots.pdf we can look at a number of informative plots. Most of the tabs have error bars that were generated by bootstrapping (isolates were subsampled in a random order to estimate this impacts on the identification of the pangenome). Some important plots include:
 * Number of new genes - After the introduction of the first genome very few 'new' genes are introduced. 
 * Number of conserved genes - The number of conserved genes drops very slowly, beginning to reach its asymptote, indicated that we have identified a stable core genome.
 * Number of genes in the pangenome - As above it has reached its asymptote, it is likely we have discovered the majority of genes in the pangenome. 
@@ -126,7 +145,9 @@ We can see summary information such as number of genomes containing the CDS, the
 
 If we scroll down to the bottom of the file (or sort ascending on column 'No. Isolates') we can see the accessory genes (those not present in all 16 isolates). 
 
-What do you notice about the entries in the Annotation column? Is there any over-represented annotations? Why might this be?
+Questions:
+- _What do you notice about the entries in the Annotation column?_
+- _Is there any over-represented annotations? Why might this be?_
 
 Rs has a large number of insertion sequences (short tracks of self replicating DNA). These repetitive sequences can be a problem for assemblers so only some of them will be assembled correctly in each genome.  
 
@@ -140,21 +161,18 @@ roary -p 16 -s -o pangenome_noparalogs -f ./pangenome_noparalogs -v *.gff
 
 Using your sftp client (e.g. WinSCP or Filezilla) copy summary_statistics.txt and gene_presence_absence.csv to your local computer.
 
-Have the core or accessory genes been effected more by the introduction of paralogous genes to our gene clusters? 
+Questions:
+- _Have the core or accessory genes been effected more by the introduction of paralogous genes to our gene clusters?_
+- _Sort the column on No. sequences. Do you notice anything about the top hits?_
 
-Sort the column on No. sequences. Do you notice anything about the top hits?
 
-
-#### Creating a core gene alignment 
+### Core gene alignment 
 
 Roary can also be use to create an alignment of core genes. We will use this core gene alignment to produce phylogenetic trees. 
 
-We can run Roary using the following command *BUT* this takes a considerable amount of time as all the genes will be individually aligned. 
+We can run Roary using the following command **BUT** this takes a considerable amount of time as all the genes will be individually aligned. 
 
-So I have provided you with the files from this a Roary run using the commands below in the directory /wrk/mirossi/shared_all/Thursday/Renibacterium/Pangenome/: 
-
-Using your sftp client (e.g. WinSCP or Filezilla) copy gene_presence_absence.csv to your local computer.
-
+So I have provided you with the files from this a Roary run using the commands below in the directory Thursday19thMay/Renibacterium/Pangenome/: 
 
 ```sh
 roary -p 16 -e -z -r -o pangenome_default -f ./pangenome -v *.gff 
@@ -167,30 +185,30 @@ Command Breakdown
 -z        dont delete intermediate files (does not delete individual gene files)
 ``` 
 
-Navigate to /wrk/mirossi/shared_all/Thursday/Renibacterium/Pangenome/pang_genome_sequences/ and search for gene alpha_LP.fa.aln. You will notice the alignment is truncated at the start of the gene in some isolates.
-This truncation could be due to real genetic variance or assembly/annotation error. This alignment will be incorporated into our core gene alignment and _may_ be a source of artifactual variation. We will not take this further today but it is something to consider in future research.    
+Navigate to /Thursday19thMay/Renibacterium/Pangenome/pan_genome_sequences/ and search for gene alpha_LP.fa.aln. You will notice the alignment is truncated at the start of the gene in some isolates.
+This truncation could be due to real genetic variance or assembly or annotation error. This alignment will be incorporated into our core gene alignment and _may_ be a source of artefactual variation. We will not take this further today but it is something to consider in future research.    
 
 We have made a pangenome for our sample and also highlighted some of the concerns and considerations that you should keep in mind when performing this sort of analysis. However, in summary we have a a huge table as our output. This is quite hard to interpret. Next we are going to to generate phylogenetic trees and incorporate these into our analyses.   
 
 
 #### Phylogeny 
 
-In directory/wrk/mirossi/shared_all/Thursday/Renibacterium/Pangenome/ you will find a file called core_gene_alignment.aln. Copy this file to your working directory. 
+In directory /Thursday19thMay/Renibacterium/Pangenome/ you will find a file called core_gene_alignment.aln. 
 
 > core_gene_alignment.aln - a multifasta file containing an *aligned* set of core genes for each isolate that was passed to Roary
 
 We are going to build a phylogenetic tree from the sequences contained in this file. 
 
 > NOTE - a quicker and easier approach to generating a tree from the core genome using _contigs_ would be to align the filtered contigs and building a tree from this alignment. 
-A collection of tools called the Harvest suite can be used to do this very quickly for a large number of genomes. However, Harvest is not avilable for Windows computers (used by a majority of the group)
-so we will not use this to compare and contrast our results. 
+A collection of tools called the Harvest suite can be used to do this very quickly for a large number of genomes. However, Harvest is not available for Windows computers (used by a majority of the working group)
+so we will not use this today. 
 
 There are multiple types of tree building software available for working with genes or whole genome sequences.
 There is also a range of different tree building methods. These vary from fast and inaccurate (neighbour-joining) to extremely slow and computer intensive methods with a high degree of accuracy (maximum likelihood). 
 
-Typically we might use a neighbour joining (NJ) tree to quickly assess the phylogenetic structure of a dataset or apply it to to a very large dataset that would take a prohibitive length of time to analyse with maximum likelihood (ML). 
+Typically we might use a neighbour joining (NJ) tree to quickly assess the phylogenetic structure of a dataset or apply it to to a very large dataset that would take a prohibitive length of time to analyse with maximum likelihood (ML) or Bayesian methods. 
 
-We are going to use [FastTree](http://meta.microbesonline.org/fasttree/) and for demonstration purposes. It should be installed on your local computer. It can generate an approximate-ML trees quite quickly.
+We are going to use [FastTree](http://meta.microbesonline.org/fasttree/) and for demonstration purposes. It should be installed on your local computer. It can generate an approximate-ML or NJ trees quite quickly.
 
 Firstly, lets generate a neighbour joining tree.
 
@@ -210,7 +228,6 @@ fasttree -nosupport -noml -nome -nt core_gene_alignment.aln > fastree_nj.tre
 Command Breakdown
   -noml to turn off maximum-likelihood
   -nome to turn off minimum-evolution NNIs and SPRs
-        (recommended if running additional ML NNIs with -intree)
   -nt 	input nucleotide alignment. 
   -nosupport to not compute support values
 
@@ -231,10 +248,10 @@ module load gcc/4.8.2
 module load  intelmpi/4.1.3
 module load phyml/20150217
 
-# Convert multiline fasta to one line fasta
+# Convert multi-line fasta to a one-line fasta
 awk '!/^>/ { printf "%s", $0; n = "\n" } /^>/ { print n $0; n = "" } END { printf "%s", n }' core_gene_alignment.aln > temp.fasta && mv temp.fasta core_gene_alignment.aln
 
-# replace - with N
+# replace - characters with N characters (PhyML only acccepts ATCGN)
 sed 's/\-/N/g' core_gene_alignment.aln > temp.fasta && mv temp.fasta core_gene_alignment.aln
 
 # Convert input to phylip format
@@ -258,7 +275,7 @@ Command Breakdown
 -b 	100 bootstraps - PhyML then returns the bootstrap tree with branch lengths and bootstrap values.
 ```
 
-Alternatively we can make an approximate ML tree using FastTree non your local machine. This can be 10-100x faster on datasets containing many genomes or datasets that contain a high number of variants per genome. 
+Alternatively we can make an approximate ML tree using FastTree on your local machine. This can be 10-100x faster on datasets containing many genomes or datasets that contain a high number of variants per genome. 
 
 ```
 # We will want to run this in the background using screen 
@@ -266,7 +283,7 @@ screen -S ML_tree
 
 fasttree -gtr -gamma -cat 4 -nt < core_gene_alignment.fasta > fastree_ml.tre
 
-# press Ctrl+A+D to detach from the screen and screen -r ML_tree to reattach the screen. 
+# press Ctrl+A+D to detach from the screen and screen -r ML_tree to re-attach the screen. 
 # This should take ~55 mins
 ```
 
@@ -281,7 +298,7 @@ Command Breakdown
   -nt 	input nucleotide alignment. 
 ```
 
-_NOTE_: For project or publication purposes you will want to generate a ML tree using the gold standards of tree building such as RAXML or PhyML. 
+**NOTE**: For project or publication purposes you will want to generate a ML tree using the gold standards of tree building such as RAXML or PhyML. 
 
 Lets compare our consensus ML and NJ trees trees using a script developed by by Morgan N. Price in Adam Arkin's group at Lawrence Berkeley National Lab. You can find the perl script in the directory scripts. For interpreting the results please check http://meta.microbesonline.org/fasttree/treecmp.html
 
@@ -293,15 +310,15 @@ Copy and paste the results into libreOffice/Excel.
 
 The value after frac: is the number of splits that are shared between both trees. The value is quite low. We have differences between our ML and NJ trees. 
 
-Lets explore why that might be. Open your phyML and NJ tree in Figtree. Root both at the midpoint. 
+Lets explore why that might be. Using your sftp client (e.g. WinSCP or Filezilla) copy fastree_nj.tre and core_gene_alignment.gtr_cat4 to your local computer. Open your phyML and NJ tree in Figtree. Root both at the midpoint. 
 
 Question:
-* Which splits are different between the trees? 
+- Which splits are different between the trees? 
  
 ```
 On the PhyML tree expand the Node Labels Tab -> Display -> Labels
 
-This gives the bootstrap support for each of our branches (we bootstrapped our ML tree 100x) 
+This gives the bootstrap support for each of our branches (we bootstrapped our ML tree 100 times) 
 
 ```
 
@@ -310,12 +327,12 @@ As we can see the split containing ERR327960, ERR327940 and ERR327926 has low bo
 To investigate our phylogenetic inference further we might want to:
 * Delve deeper into the data and look at the SNP data per site (are any of the sites/genes unreliable?)
 * Does our data have significant recombination that could effect the inference (ClonalFrameML/BratNextGen/Gubbins)? 
-* Build a tree using another approach such as a bayesian tree (MrBayes).
+* Build a tree using another approach such as a Bayesian tree (MrBayes).
 * Prepare the data using another approach such as mapping (BWA->samtools) or assembly alignment (Harvest Suite/Parsnp). Have we lost informative SNPs by removing the intergenic sites? 
  
 We don't have time to take the analysis further today, but these are considerations for future projects. 
 
-We are going to use NJ tree, as it is easiest to interprete, and annotate it with our isolate metadata.
+We are going to use NJ tree, as it is easiest to interpret, and annotate it with our isolate metadata.
 
 ```
 Open the NJ tree in Figtree.
@@ -326,13 +343,13 @@ Expand on the Tip Label Option Box to the left of the tree -> Display -> Country
 ```
 
 Questions:
-* What was the historical transmission route of *Renibacterium salmoninarum*?
+* Focus on the largest cluster of isolates. What was the historical transmission route of *Renibacterium salmoninarum*?
 * Using the same procedure `Display -> Host` answer the question 'how host specific is *Renibacterium salmoninarum*?'
 
 
-### Using Pangenomes to improve phylogeny. 
+### Visualising Pangenomes Alongside Phylogeny. 
 
-Pangenomes provide another layer of information about bacterial genomes and may help with geneological inferenec. For example, two isolates may have the same core genome sequence *BUT* one may have acquired a mobile gentic element. 
+Pangenomes provide another layer of information about bacterial genomes and may help with genealogical inference. For example, two isolates may have the same core genome sequence _but one may have acquired a mobile genetic element_. 
 
 In order to visualise this information we are going to use a recently released tool called [Phandango](http://jameshadfield.github.io/phandango/). This tool is very useful as it allows us to interact with our data. Follow the link to open Phandango.
 
@@ -348,20 +365,21 @@ Questions:
 
 # Conclusion
 
-This morning you have learned how to identify the pangenome of a cohort of bacterial genomes, how to take the core gene alignment and create phylogenetic trees and how to visualise your results at each step. 
+This morning you have learned how to identify the pangenome of a cohort of bacterial genomes, how to take the core gene alignment, create phylogenetic trees from this alignment and how to visualise your results at each step. 
 
 During the afternoon session you will learn how to identify and remove the signal of recombination from your sample. 
 
-Below you will find a tutorial some of the software you will be using the afternoon. The section below is _optional_. Please try it in your own time.  
+Below you will find a tutorial that takes the analysis on the _Renibacterium_ isolates a few steps further. It uses some of the software you will be applying this afternoon. The section below is _optional_ for those of you that would like to try it in your own time.  
 
 
 ## Additional notes. 
 
 ### Hierarchical analysis of population structure 
 
-Next we will group our isolates into hierarchical clusters.  
+We can group our isolates into hierarchical clusters.  
 
-Phylogenetic trees are easily to interpret visually when they contain very few isolates. However, with larger isolates, or less well defined trees it is often much harder to define what isolates are contained in a 'cluster' or 'sub-cluster'. For this reason tools exist to cluster your isolates in an automated manner using a statistical framework. Sometime these tools will identify structure that was not obvious my visual interpretation. 
+Phylogenetic trees are easily to interpret visually when they contain very few isolates. However, with larger isolates, or less well defined trees it is often much harder to define what isolates are contained in a 'cluster' or 'sub-cluster'. 
+For this reason tools exist to cluster your isolates in an automated manner using a statistical framework. Sometime these tools will identify structure that was not obvious my visual interpretation. 
 
 For hierarchical clustering we will use a tool called [BAPS](http://www.helsinki.fi/bsg/software/BAPS/) (Bayesian Analysis of Population Structure) and its associated tool Hierarchical BAPS/hierBAPS. This tool was developed here in Helsinki. 
 
@@ -370,8 +388,6 @@ For hierarchical clustering we will use a tool called [BAPS](http://www.helsinki
 mkdir BAPS && cd BAPS
 
 # copy your alignment into this folder.  
-****
-
 ./hierBAPS.sh exData core_gene_alignment.fasta fasta  # This will produce an input file called "***.mat" from you alignment file.
 
 ./hierBAPS.sh hierBAPS seqs.mat 2 10 results_core > BAPS_log.txt  # This will launch hierBAPS. hierBAPS will save an output file named results.mat (binary format) and a partition file "results.partition.txt". It will go two levels deep into the heirachy and use a prior of 10 clusters. 
@@ -384,11 +400,12 @@ grep ">" core_gene_alignment.fasta > temp.txt && sed 's/>//' temp.txt > labels.t
 
 We do not just have to visualise our BAPS clusters with the provided tool. We can also use a number of other tools. 
 
-We can visualise our BAPS output a number of ways. One recently released tool called [Phandango]() is very useful and allows us to interact with our data. 
+We can visualise our BAPS output a number of ways. Here we will use Phandango. 
 
-Open results.partition.txt in Excel/Libreoffice. Add a column to the left hand side called taxa with the entries from labels.txt. Add column headers to columns 2-4 (BAPS Group 1-3). Add the metadata columns from metadata.tab.  Save the file as BAPS_annotation.csv (ensure it is saved in csv format). 
+Open results.partition.txt in Excel/Libreoffice. Add a column to the left hand side called taxa with the entries from labels.txt. Add column headers to columns 2-4 (BAPS Group 1-3). 
+Add the metadata columns from metadata.tab. Save the file as BAPS_annotation.csv (ensure it is saved in csv format). 
 
-Now we can drag and drop our tree file (ensure the file extension is .tre) and our BAPS cluster information (*file) onto Phandango. 
+Now we can drag and drop our tree file (ensure the file extension is .tre) and our BAPS cluster information (filename.csv) onto Phandango. 
 
 This allows us to visualise the major clusters and any subclusters within these in an interactive manner. 
 
@@ -399,20 +416,19 @@ Now we can use our scroll wheel to zoom into any region on the figure. We can al
 
 We can also use Phandago to provide us with more information about our phylogeny. 
 
-Drag your gene_presence_absence.csv from Roary onto the Phandango window you have open. 
-
-We can now visualise the pangenome alongside our phylogeny. 
+Drag your gene_presence_absence.csv from Roary onto the Phandango window you have open. This allows us to visualise the pangenome alongside our phylogeny. 
 
 
-### BRATNextgen
+### Identifying Recombination 
 
-Recombination is a factor that can have a large impact on the inference of phylogeny from bacterial whole genome datasets. Large amounts of recombination between distantly related isolates can make them seem more genetically similar than if we were to look at them from the perspective of clonal decent. 
+Recombination is a factor that can have a large impact on the inference of phylogeny from bacterial whole genome datasets. 
+Large amounts of recombination between distantly related isolates can make them seem more genetically similar than if we were to look at them from the perspective of clonal decent. 
 
 It is often prudent to identify and remove recombination/recombinant sites from our dataset so that the impact of recombination does not effect our inference of phylogeny. 
 
 There are a number of tools available to identify recombinant sites within WGS data including ClonalFrame, ClonalFrameML, Gubbins and BratNextGen. 
 
-Today we will be using BratNextGen which was developed here in Helsinki (By Jukka Corander, the creator of BAPS). This will have been locally installed on your laptop.
+Today we will be using BratNextGen which was developed here in Helsinki (By Jukka Corander and Co., the creator of BAPS). This will have been locally installed on your laptop.
 
 Use the core genome alignment that was generated by Roary. 
 
@@ -439,5 +455,5 @@ Results -> Draw Segments
 Results -> Write Segments
 ```
 
-The results of BratNextGen can be visualised in Phandango. Just drag and drop the output to the Phandango window. 
+The results of BratNextGen can be visualised in Phandango. Just drag and drop the output of BratNextGen to the Phandango window. 
 
