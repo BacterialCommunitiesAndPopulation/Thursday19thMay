@@ -24,7 +24,7 @@ nano Prokkabatch.sh
 
     #!/bin/bash -l
     # created: May 10, 2016 6:08 PM
-    # author: [useraccount]
+    # author: **[useraccount]**
     #SBATCH --constraint="snb|hsw"
     #SBATCH -o stdO
     #SBATCH -e stdE
@@ -32,7 +32,7 @@ nano Prokkabatch.sh
     #SBATCH -n 16
     #SBATCH -t 01:00:00
     #SBATCH --mail-type=END
-    #SBATCH --mail-user= [your Email]
+    #SBATCH --mail-user= **[your Email]**
 
     # commands to manage the batch script
     #   submission command
@@ -51,7 +51,7 @@ nano Prokkabatch.sh
     module purge
     module load biokit
     module load prokka
-    cd [path/to/Campylobacter/small_dataset]
+    cd **[path/to/Campylobacter/small_dataset]**
     for file in *.fasta; do prokka --cpus 16 --outdir $file-dir --prefix $file- $file; done
     mkdir prokka-gff
     for dir in *dir; do mv $dir/*.gff ./prokka-gff; done
