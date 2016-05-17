@@ -35,7 +35,8 @@ sbatch Prokkabatch.sh
 Open a new session in Taito
 
 ```
-screen
+sinteractive
+screen -S <name your job>
 ```
 
 Load the modules you need.
@@ -51,16 +52,15 @@ Build a directory named *roary*.
 Run Roary.
 
 ```
-nohup time roary -e --mafft -o small_dataset_proteins -f roary -cd 100 -p 16 [path/to/prokkaGFF/files] &
+time roary -e --mafft -o small_dataset_proteins -f roary -cd 100 -p 4 [path/to/prokkaGFF/files]
 ```
 
-exit from the session
+exit from the session *Ctrl a d*
 
-
-After ~15 min Check if the job is finished 
+After ~15 min check if the job is finished 
 
 ```
-less nohup.out
+screen -r <job name>
 ```
 
 ##Run FastTree
@@ -68,8 +68,10 @@ less nohup.out
 Open a new session in Taito
 
 ```
-screen
+sinteractive
+screen -S <name your job>
 ```
+
 Load the modules you need.
 
 ```
@@ -79,9 +81,17 @@ module load biokit
 You need to run FastTree using the *core_gene_alignment.aln* built by *Roary*.
 
 ```
-nohup [path/to/]FastTree -nt < [path/to/core_gene_alignment.aln] > core_gene_alignment.nwk &
+[path/to/]FastTree -nt < [path/to/core_gene_alignment.aln] > core_gene_alignment.nwk
 ```
 exit from the session
 
 After ~10 min check if the job is finished 
+
+exit from the session *Ctrl a d*
+
+After ~15 min check if the job is finished 
+
+```
+screen -r <job name>
+```
 
