@@ -17,11 +17,51 @@ Open the file *Prokkabatch.sh* in *nano*
 ```
 nano Prokkabatch.sh
 ```
-and change the following lines:
+and change the text between **[bracket]**:
 
 ```
-#SBATCH --mail-user= [put your E-mail address]
-cd [path/to/Campylobacter/small_dataset]
+nano Prokkabatch.sh
+
+    #!/bin/bash -l
+    # created: May 10, 2016 6:08 PM
+    # author: [useraccount]
+    #SBATCH --constraint="snb|hsw"
+    #SBATCH -o stdO
+    #SBATCH -e stdE
+    #SBATCH -p serial
+    #SBATCH -n 16
+    #SBATCH -t 01:00:00
+    #SBATCH --mail-type=END
+    #SBATCH --mail-user= [your Email]
+
+    # commands to manage the batch script
+    #   submission command
+    #     sbatch script-file
+    #   status command
+    #     squeue -u your useraccount
+    #   termination command
+    #     scancel jobid
+
+    # For more information
+    #   man sbatch
+    #   more examples in Taito guide in
+    #   http://research.csc.fi/taito-user-guide
+
+    #running prokka
+    module purge
+    module load biokit
+    module load prokka
+    cd [path/to/Campylobacter/small_dataset]
+    for file in *.fasta; do prokka --cpus 16 --outdir $file-dir --prefix $file- $file; done
+    mkdir prokka-gff
+    for dir in *dir; do mv $dir/*.gff ./prokka-gff; done
+
+    # This script will print some usage statistics to the
+    # end of file: stdO
+    # Use that to improve your resource request estimate
+    # on later jobs.
+    used_slurm_resources.bash
+
 ```
 
 Run the batch script
