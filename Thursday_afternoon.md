@@ -120,8 +120,9 @@ Run Fasttree
 
 ```
 screen
+sinteractive
 module load biokit
-nohup [path/to/]FastTree -nt < [path/to/newfile.fas] > core_gene_unrecom.nwk &
+[path/to/]FastTree -nt < [path/to/newfile.fas] > core_gene_unrecom.nwk
 exit
 ```
 
