@@ -1,5 +1,5 @@
 
-## Additional notes. 
+## Additional notes 
 
 ### Hierarchical analysis of population structure 
 
