@@ -75,8 +75,8 @@ sbatch Prokkabatch.sh
 Open a new session in Taito
 
 ```
-sinteractive
 screen -S <name your job>
+sinteractive
 ```
 
 Load the modules you need.
@@ -108,8 +108,8 @@ screen -r <job name>
 Open a new session in Taito
 
 ```
-sinteractive
 screen -S <name your job>
+sinteractive
 ```
 
 Load the modules you need.
