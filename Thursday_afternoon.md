@@ -125,6 +125,7 @@ module load biokit
 [path/to/]FastTree -nt < [path/to/newfile.fas] > core_gene_unrecom.nwk
 exit
 ```
+**NOTE:** Remember with *Ctrl a d* you can always close the *screen* session. You can reattach the *screen* by typing *screen -r job title*
 
 After ~10 min check if the job is finished 
 
