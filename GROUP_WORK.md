@@ -52,7 +52,7 @@ Build a directory named *roary*.
 Run Roary.
 
 ```
-time roary -e --mafft -o small_dataset_proteins -f roary -cd 100 -p 4 [path/to/prokkaGFF/files]
+roary -e --mafft -o small_dataset_proteins -f roary -cd 100 -p 4 [path/to/prokkaGFF/files]
 ```
 
 exit from the session *Ctrl a d*
