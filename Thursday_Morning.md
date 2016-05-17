@@ -21,9 +21,6 @@ You will:
 - Build a phylogenetic tree from the core genes in your pangenome. 
 - Compare phylogenetic tree building methods.
 - Visualise the pangenome and phylogenetic trees and learn how they might be used to understand the epidemiology of a pathogen.  
-- \[Optional\] - Heirachically cluster isolates.
-- \[Optional\] - Identify recombination regions in your sample.   
-
 
 ### **NOTE**: Mapping to a reference genome vs. aligning assemblies 
 
