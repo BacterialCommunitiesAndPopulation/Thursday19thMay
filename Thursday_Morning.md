@@ -9,6 +9,24 @@ Co-ordinator:  Dr Sion Bayliss
 - PhyMl
 - FastTree
 
+###Taito
+
+Before we begin log into the taito in a non-interactive shell using `ssh username@taito.csc.fi`
+
+```
+# Make an interactive instance.
+screen -S WorkingSession
+sinteractive
+
+# Load the appropriate modules
+module load biokit
+module load prokka  
+```
+
+If you need to close/suspend your computer and keep and processes running on the node you can press Ctrl+A+D to detach the screen. 
+
+To reattach to your session use the command `screen -r WorkingSession`
+
 ### Summary
 
 In the previous session you were introduced to whole genome assembly and associated QC. During the next session you will focus on how the results of NGS assembly can be used to study the epidemiology of your sample.   
@@ -42,7 +60,6 @@ such as understanding the typical metabolic pathways within your organism or for
 
 * Accessory Genome - Genes that are present only in a subset of isolates from your sample. Accessory elements can include virulence, resistance or adaptation elements such as phages or plasmids but can also include gene duplications 
 or other horizontally acquired elements such as insertion sequences.    
-
 
 ### Identifying the pangenome
 
@@ -80,7 +97,7 @@ cd GFFs
 
 # Run Roary (it will make a results directory for you)
 # The *.gff lists all files with the .gff extension, in this case our files of interest. 
-roary -p 16 -o pangenome_default -f ./pangenome_default -v *.gff 
+roary -p 4 -o pangenome_default -f ./pangenome_default -v *.gff 
 ```
 
 ```
@@ -170,7 +187,7 @@ We can run Roary using the following command **BUT** this takes a considerable a
 So I have provided you with the files from this a Roary run using the commands below in the directory Thursday19thMay/Renibacterium/Pangenome/: 
 
 ```sh
-roary -p 16 -e -z -r -o pangenome_default -f ./pangenome -v *.gff 
+roary -p 4 -e -z -r -o pangenome_default -f ./pangenome -v *.gff 
 ```
 
 ```
@@ -180,10 +197,19 @@ Command Breakdown
 -z        dont delete intermediate files (does not delete individual gene files)
 ``` 
 
-Navigate to /Thursday19thMay/Renibacterium/Pangenome/pan_genome_sequences/ and search for gene alpha_LP.fa.aln. You will notice the alignment is truncated at the start of the gene in some isolates.
-This truncation could be due to real genetic variance or assembly and annotation error. This alignment will be incorporated into our core gene alignment and _may_ be a source of artefactual variation. We will not take this further today but it is something to consider in future research.    
+We can also explore the per gene alignments (because we included the `-z` option to retain the intermediate files). 
 
-We have made a pangenome for our sample and also highlighted some of the concerns and considerations that you should keep in mind when performing this sort of analysis. However, in summary we have a a huge table as our output. This is quite hard to interpret. Next we are going to generate phylogenetic trees and incorporate these into our analyses.   
+If you have software to open/visualise alignments, such as Mega or Seaview, you can follow the section below. Otherwise, I will use these examples as a group. 
+
+```
+Navigate to /Thursday19thMay/Renibacterium/Pangenome/pan_genome_sequences/ and search for genes alpha_LP.fa.aln. You will notice the alignment is truncated at the start of the gene in some isolates.This truncation could be due to real genetic variance or assembly and annotation error. 
+
+The gene apbE has a region where a misalignment has introduced a base difference. This is a case where an artifactual base changed has been introduced. 
+```
+
+These alignments will be incorporated into our core gene alignment and _may_ be a source of artefactual variation. We will not take this further today but it is something to consider when building a core gene alignment with Roary.    
+
+We have made a pangenome for our sample and have also highlighted a few of the concerns and considerations that you should keep in mind when performing this sort of analysis. However, in summary we have a a huge table as our output. This is quite hard to interpret. Next we are going to generate phylogenetic trees and incorporate these into our analyses.   
 
 
 #### Phylogeny 
@@ -195,8 +221,7 @@ In directory /Thursday19thMay/Renibacterium/Pangenome/ you will find a file call
 We are going to build a phylogenetic tree from the sequences contained in this file. 
 
 > NOTE - a quicker and easier approach to generating a tree from the core genome using _contigs_ would be to align the filtered contigs and building a tree from this alignment. 
-A collection of tools called the Harvest suite can be used to do this very quickly for a large number of genomes. However, Harvest is not available for Windows computers (used by a majority of the working group)
-so we will not use this today. 
+A collection of tools called the Harvest suite can be used to do this very quickly for a large number of genomes. However, Harvest is not available for Windows computers (used by a majority of the working group) so we will not use this today. 
 
 There are multiple types of tree building software available for working with genes or whole genome sequences.
 There is also a range of different tree building methods. These vary from fast and inaccurate (neighbour-joining) to extremely slow and computer intensive methods with a high degree of accuracy (maximum likelihood). 
@@ -240,7 +265,7 @@ We will produce an ML tree to see if there are any differences in the phylogenet
 # Taito 
 module purge
 module load gcc/4.8.2
-module load  intelmpi/4.1.3
+module load intelmpi/4.1.3
 module load phyml/20150217
 
 # Convert multi-line fasta to a one-line fasta
@@ -364,5 +389,5 @@ This morning you have learned how to identify the pangenome of a cohort of bacte
 
 During the afternoon session you will learn how to identify and remove the signal of recombination from your sample. 
 
-A tutorial that takes the analysis on the _Renibacterium_ isolates a few steps further can be found [here](https://github.com/BacterialCommunitiesAndPopulation/Thursday19thMay/blob/master/Optional_RSdataset.md). It uses some of the software you will be applying this afternoon. The section below is _optional_ for those of you that would like to try it in your own time.  
+A tutorial that takes the analysis on the _Renibacterium_ isolates a few steps further can be found [here](https://github.com/BacterialCommunitiesAndPopulation/Thursday19thMay/blob/master/Optional_RSdataset.md). It uses some of the software you will be applying this afternoon. This section is _optional_ for those of you that would like to try it in your own time.  
 
