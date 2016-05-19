@@ -51,8 +51,8 @@ nano Prokkabatch.sh
     module purge
     module load biokit
     module load prokka
-    cd [path/to/Campylobacter/small_dataset]
-    for file in *.fasta; do prokka --cpus 16 --outdir $file-dir --prefix $file- $file; done
+    cd [path/to/Campylobacter/Assemblies]
+    for file in *.fas; do prokka --cpus 16 --outdir $file-dir --prefix $file- $file; done
     mkdir prokka-gff
     for dir in *dir; do mv $dir/*.gff ./prokka-gff; done
 
