@@ -168,7 +168,7 @@ Roary, by default, looks for 'true' paralogs i.e. one copy of a gene in one geno
 We can switch off paralog matching using the `-s` option. What does the pangenome look like with paralog matching switched off?
 
 ```sh
-roary -p 16 -s -o pangenome_noparalogs -f ./pangenome_noparalogs -v *.gff
+roary -p 4 -s -o pangenome_noparalogs -f ./pangenome_noparalogs -v *.gff
 ```
 
 Using your sftp client (e.g. WinSCP or Filezilla) copy summary_statistics.txt and gene_presence_absence.csv to your local computer.
